@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eduadmin.wechat.mapper.GradeMapper">
+  <resultMap id="GradeMap" type="com.eduadmin.wechat.domain.GradeRecord">
+    <id property="id" column="id" />
+    <result property="studentId" column="student_id" />
+    <result property="courseId" column="course_id" />
+    <result property="courseName" column="course_name" />
+    <result property="type" column="type" />
+    <result property="score" column="score" />
+    <result property="examDate" column="exam_date" />
+    <result property="remark" column="remark" />
+  </resultMap>
+
+  <insert id="insert" parameterType="com.eduadmin.wechat.domain.GradeRecord" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO student_grade (student_id, course_id, type, score, exam_date, remark)
+    VALUES (#{studentId}, #{courseId}, #{type}, #{score}, NOW(), #{remark})
+  </insert>
+
+  <select id="listByStudent" parameterType="long" resultMap="GradeMap">
+    SELECT g.id,
+           g.student_id,
+           g.course_id,
+           COALESCE(ci.name, CONCAT('班级#', cl.id)) AS course_name,
+           g.type,
+           g.score,
+           g.exam_date,
+           g.remark
+    FROM student_grade g
+    LEFT JOIN classes cl ON cl.id = (
+      SELECT ce.class_id FROM class_enrollment ce WHERE ce.student_id = g.student_id LIMIT 1
+    )
+    LEFT JOIN class_info ci ON ci.id = cl.id
+    WHERE g.student_id = #{studentId}
+    ORDER BY g.exam_date DESC, g.id DESC
+  </select>
+</mapper>

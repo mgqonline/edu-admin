@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eduadmin.wechat.mapper.StudentFeedbackMapper">
+  <resultMap id="BaseMap" type="com.eduadmin.wechat.domain.StudentFeedback">
+    <id column="id" property="id" />
+    <result column="student_id" property="studentId" />
+    <result column="content" property="content" />
+    <result column="status" property="status" />
+    <result column="created_at" property="createdAt" />
+  </resultMap>
+
+  <insert id="insert" parameterType="com.eduadmin.wechat.domain.StudentFeedback" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO student_feedback(student_id, content, status)
+    VALUES(#{studentId}, #{content}, #{status})
+  </insert>
+
+  <select id="listByStudent" resultMap="BaseMap">
+    SELECT * FROM student_feedback WHERE student_id = #{studentId} ORDER BY created_at DESC
+  </select>
+</mapper>

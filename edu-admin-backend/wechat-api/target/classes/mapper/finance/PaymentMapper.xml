@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eduadmin.wechat.mapper.PaymentMapper">
+  <resultMap id="PaymentItemMap" type="com.eduadmin.wechat.domain.PaymentItem">
+    <id property="id" column="id" />
+    <result property="courseName" column="course_name" />
+    <result property="classId" column="class_id" />
+    <result property="amount" column="amount" />
+    <result property="date" column="created_at" />
+    <result property="type" column="op_type" />
+    <result property="method" column="method" />
+  </resultMap>
+
+  <select id="listByStudent" parameterType="long" resultMap="PaymentItemMap">
+    SELECT fs.id AS id,
+           COALESCE(ci.name, CONCAT('班级#', fs.class_id)) AS course_name,
+           fs.class_id AS class_id,
+           fs.total_fee AS amount,
+           fs.created_at AS created_at,
+           fs.op_type AS op_type,
+           fs.method AS method
+    FROM finance_settlement fs
+    LEFT JOIN classes c ON c.id = fs.class_id
+    LEFT JOIN class_info ci ON ci.id = c.id
+    WHERE fs.student_id = #{studentId}
+    ORDER BY fs.id DESC
+    LIMIT 100
+  </select>
+</mapper>

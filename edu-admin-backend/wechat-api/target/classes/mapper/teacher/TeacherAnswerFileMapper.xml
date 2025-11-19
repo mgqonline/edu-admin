@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eduadmin.wechat.mapper.TeacherAnswerFileMapper">
+  <resultMap id="TeacherAnswerFileMap" type="com.eduadmin.wechat.domain.TeacherAnswerFile">
+    <id property="id" column="id"/>
+    <result property="teacherId" column="teacher_id"/>
+    <result property="homeworkId" column="homework_id"/>
+    <result property="title" column="title"/>
+    <result property="filename" column="filename"/>
+    <result property="size" column="size"/>
+    <result property="url" column="url"/>
+    <result property="uploadedAt" column="uploaded_at"/>
+  </resultMap>
+
+  <insert id="insert" parameterType="com.eduadmin.wechat.domain.TeacherAnswerFile" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO teacher_answer_file (teacher_id, homework_id, title, filename, size, url, uploaded_at)
+    VALUES (#{teacherId}, #{homeworkId}, #{title}, #{filename}, #{size}, #{url}, NOW())
+  </insert>
+</mapper>

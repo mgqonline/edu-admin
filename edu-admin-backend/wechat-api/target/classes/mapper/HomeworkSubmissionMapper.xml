@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eduadmin.wechat.mapper.HomeworkSubmissionMapper">
+    <resultMap id="HomeworkSubmissionMap" type="com.eduadmin.wechat.domain.HomeworkSubmission">
+        <id property="id" column="id"/>
+        <result property="studentId" column="student_id"/>
+        <result property="homeworkId" column="homework_id"/>
+        <result property="filename" column="filename"/>
+        <result property="size" column="size"/>
+        <result property="url" column="url"/>
+        <result property="createdAt" column="created_at"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.eduadmin.wechat.domain.HomeworkSubmission" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO homework_submission (student_id, homework_id, filename, size, url, created_at)
+        VALUES (#{studentId}, #{homeworkId}, #{filename}, #{size}, #{url}, NOW())
+    </insert>
+
+    <select id="listByStudentId" parameterType="long" resultMap="HomeworkSubmissionMap">
+        SELECT id, student_id, homework_id, filename, size, url, created_at
+        FROM homework_submission
+        WHERE student_id = #{studentId}
+        ORDER BY id DESC
+    </select>
+</mapper>

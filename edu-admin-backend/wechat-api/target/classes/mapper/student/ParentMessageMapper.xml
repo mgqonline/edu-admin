@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eduadmin.wechat.mapper.ParentMessageMapper">
+  <resultMap id="BaseMap" type="com.eduadmin.wechat.domain.ParentMessage">
+    <id column="id" property="id" />
+    <result column="student_id" property="studentId" />
+    <result column="teacher_id" property="teacherId" />
+    <result column="parent_name" property="parentName" />
+    <result column="content" property="content" />
+    <result column="reply" property="reply" />
+    <result column="status" property="status" />
+    <result column="created_at" property="createdAt" />
+    <result column="replied_at" property="repliedAt" />
+  </resultMap>
+
+  <insert id="insert" parameterType="com.eduadmin.wechat.domain.ParentMessage" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO parent_message(student_id, teacher_id, parent_name, content, status)
+    VALUES(#{studentId}, #{teacherId}, #{parentName}, #{content}, #{status})
+  </insert>
+
+  <update id="reply">
+    UPDATE parent_message SET reply = #{reply}, status = 'closed', replied_at = NOW() WHERE id = #{id}
+  </update>
+
+  <select id="listByStudent" resultMap="BaseMap">
+    SELECT * FROM parent_message WHERE student_id = #{studentId} ORDER BY created_at DESC
+  </select>
+
+  <select id="listByTeacher" resultMap="BaseMap">
+    SELECT * FROM parent_message WHERE teacher_id = #{teacherId} ORDER BY created_at DESC
+  </select>
+</mapper>
