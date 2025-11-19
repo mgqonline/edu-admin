@@ -1,0 +1,28 @@
+<scroll-view class="page-scroll p-24" scroll-y="true">
+  <view class="hero">
+    <view class="hero-title">联系老师</view>
+    <view class="hero-subtitle">发送留言与联系方式</view>
+    <view class="chips">
+      <view class="chip">内容：{{contentLen}} 字</view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="section-title">留言信息</view>
+    <view class="weui-cells weui-cells_form">
+      <view class="weui-cell">
+        <view class="weui-cell__hd"><label class="weui-label form-label">老师ID</label></view>
+        <view class="weui-cell__bd"><input class="weui-input" placeholder="例如 101" bindinput="onTeacherId"/></view>
+      </view>
+      <view class="weui-cell">
+        <view class="weui-cell__hd"><label class="weui-label form-label">家长称呼</label></view>
+        <view class="weui-cell__bd"><input class="weui-input" placeholder="例如 张同学家长" bindinput="onParentName"/></view>
+      </view>
+      <view class="weui-cell">
+        <view class="weui-cell__hd"><label class="weui-label form-label">留言内容</label></view>
+        <view class="weui-cell__bd"><textarea class="weui-textarea" placeholder="填写留言内容" bindinput="onContent">{{content}}</textarea></view>
+      </view>
+    </view>
+    <view class="card-actions"><button class="weui-btn weui-btn_primary" bindtap="onSubmit" loading="{{submitting}}">发送留言</button></view>
+  </view>
+</scroll-view>

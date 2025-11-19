@@ -1,0 +1,25 @@
+<view class="container">
+  <view class="section">
+    <text class="label">角色</text>
+    <radio-group bindchange="onRoleChange" class="radio-group">
+      <label class="radio-item">
+        <radio value="student" checked="{{role === 'student'}}"/> 学员/家长
+      </label>
+      <label class="radio-item">
+        <radio value="teacher" checked="{{role === 'teacher'}}"/> 教师
+      </label>
+    </radio-group>
+  </view>
+
+  <view class="section">
+    <text class="label">用户ID</text>
+    <input class="input" type="number" placeholder="请输入{{role === 'teacher' ? '教师' : '学员'}}ID" value="{{userId}}" bindinput="onIdInput"/>
+  </view>
+
+  <view class="section">
+    <text class="label">后端地址</text>
+    <input class="input" placeholder="如 http://127.0.0.1:8090" value="{{baseUrl}}" bindinput="onBaseUrlInput"/>
+  </view>
+
+  <button class="btn" type="primary" bindtap="devLogin">开发环境登录</button>
+</view>

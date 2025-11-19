@@ -1,0 +1,93 @@
+<scroll-view class="page-scroll p-24" scroll-y="true">
+  <block wx:if="{{role === 'teacher'}}">
+  <view class="hero">
+    <view class="hero-title">教师档案</view>
+    <view class="hero-subtitle">基本信息与课时费</view>
+    <view class="chips"><view class="chip">当月课时费：{{summary.monthTotal}} 元</view></view>
+  </view>
+  <view class="card">
+    <view class="card-title">个人信息</view>
+    <view class="weui-panel__bd">
+      <view class="profile-header">
+        <image class="avatar" src="{{profile.avatarUrl}}"/>
+        <view class="info">
+          <view class="fs-32">{{profile.name}}</view>
+          <view class="chips" style="margin-top:8rpx">
+            <view class="chip">学科：{{profile.subjects}}</view>
+            <view class="chip">教龄：{{profile.years}}</view>
+            <view class="chip gray">电话：{{profile.phone}}</view>
+          </view>
+        </view>
+      </view>
+
+      <view class="section-title">当月课时费</view>
+      <view class="weui-cells">
+        <view class="weui-cell"><view class="weui-cell__bd"><text>{{summary.monthTotal}} 元</text></view></view>
+      </view>
+      <view class="card-actions">
+        <button class="weui-btn weui-btn_warn" bindtap="logout">退出登录</button>
+      </view>
+    </view>
+  </view>
+  </block>
+  <block wx:else>
+    <view class="hero">
+      <view class="hero-title">学员档案</view>
+      <view class="hero-subtitle">个人学习信息概览</view>
+      <view class="chips">
+        <view class="chip">今日待签到：{{scheduleCount}} 节</view>
+        <button class="weui-btn weui-btn_primary" size="mini" bindtap="goStudentSign" style="margin-left:12rpx">去签到</button>
+      </view>
+    </view>
+
+    <view class="section-title">待签到课时</view>
+    <view class="card mb-24">
+      <block wx:for="{{studentSchedule}}" wx:key="index">
+        <view class="list-item">
+          <image class="list-icon" src="../../assets/tab-schedule.png" />
+          <view class="list-text">
+            <view class="fs-32">{{item.className}}</view>
+            <view class="list-meta">{{item.date}} {{item.startTime}}-{{item.endTime}}</view>
+          </view>
+        </view>
+      </block>
+      <view class="empty" wx:if="{{studentSchedule.length===0}}">暂无待签到课时</view>
+    </view>
+    <view class="section-title">快捷入口</view>
+    <view class="nav-grid">
+      <navigator url="/pages/student/messages/index" class="nav-item msg">
+        <view class="nav-deco"></view>
+        <view class="nav-item-title">消息中心</view>
+      </navigator>
+      <navigator url="/pages/student/contact/index" class="nav-item contact">
+        <view class="nav-deco"></view>
+        <view class="nav-item-title">联系老师</view>
+      </navigator>
+      <navigator url="/pages/student/feedback/index" class="nav-item feedback">
+        <view class="nav-deco"></view>
+        <view class="nav-item-title">意见反馈</view>
+      </navigator>
+    </view>
+
+    <view class="section-title">消息中心</view>
+    <view class="card">
+      <view class="chips"><view class="chip">未回复：{{unreadCount}} 条</view></view>
+      <block wx:for="{{studentMessages}}" wx:key="id">
+        <view class="list-item">
+          <view class="list-text">
+            <view class="fs-28">{{item.content}}</view>
+            <view class="list-meta">{{item.createdAt || ''}} | {{item.reply || '待回复'}}</view>
+          </view>
+        </view>
+      </block>
+      <view class="empty" wx:if="{{studentMessages.length===0}}">暂无消息</view>
+    </view>
+
+    <view class="section-title">账号</view>
+    <view class="card">
+      <view class="card-actions">
+        <button class="weui-btn weui-btn_warn" bindtap="logout">退出登录</button>
+      </view>
+    </view>
+  </block>
+</scroll-view>

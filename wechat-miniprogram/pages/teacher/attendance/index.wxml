@@ -1,0 +1,71 @@
+<scroll-view class="page-scroll p-24" scroll-y="true">
+  <view class="hero">
+    <view class="hero-title">签到管理</view>
+    <view class="hero-subtitle">发起签到并查看历史</view>
+    <view class="chips">
+      <view class="chip">有效期：{{expireMinutes || 0}} 分钟</view>
+      <view class="chip gray">当前码：{{signCode || '未发起'}} </view>
+    </view>
+  </view>
+  <view class="card">
+    <view class="card-actions"><button class="weui-btn weui-btn_primary" bindtap="onStartSign">发起签到</button></view>
+    <block wx:if="{{signCode}}">
+      <view class="list-item">
+        <view class="list-text">
+          <view class="fs-32">签到码：{{signCode}}</view>
+          <view class="list-meta">有效期：{{expireMinutes}} 分钟</view>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <view class="section-title">签到历史</view>
+  <view class="card">
+    <view wx:if="{{loading}}" class="skeleton mt-16"></view>
+    <block wx:for="{{history}}" wx:key="id">
+      <view class="list-item">
+        <view class="list-text">
+          <view class="fs-28">{{item.signCode}}</view>
+          <view class="list-meta">{{item.createdAt || ''}} · {{item.count || 0}} 人签到</view>
+        </view>
+        <view class="list-actions"><button class="weui-btn weui-btn_mini weui-btn_primary" data-code="{{item.signCode}}" bindtap="onViewDetail">查看详情</button></view>
+      </view>
+    </block>
+    <view class="empty" wx:if="{{!loading && history.length===0}}">暂无记录</view>
+  </view>
+
+  <block wx:if="{{selectedSignCode}}">
+    <view class="section-title">签到详情 · {{selectedSignCode}}</view>
+    <view class="chips">
+      <view class="chip">已签到：{{detailSigned.length}}</view>
+      <view class="chip gray">未签到：{{detailUnsigned.length}}</view>
+    </view>
+    <view class="card">
+      <view class="card-title fs-28">已签到</view>
+      <view wx:if="{{detailLoading}}" class="skeleton mt-16"></view>
+      <block wx:for="{{detailSigned}}" wx:key="id">
+        <view class="list-item">
+          <view class="list-text">
+            <view class="fs-28">{{item.name}}</view>
+            <view class="list-meta">{{item.studentId || ''}} · {{item.signedAt || ''}}</view>
+          </view>
+        </view>
+      </block>
+      <view class="empty" wx:if="{{!detailLoading && detailSigned.length===0}}">暂无已签到</view>
+    </view>
+
+    <view class="card mt-16">
+      <view class="card-title fs-28">未签到</view>
+      <view wx:if="{{detailLoading}}" class="skeleton mt-16"></view>
+      <block wx:for="{{detailUnsigned}}" wx:key="id">
+        <view class="list-item">
+          <view class="list-text">
+            <view class="fs-28">{{item.name}}</view>
+            <view class="list-meta">{{item.studentId || ''}}</view>
+          </view>
+        </view>
+      </block>
+      <view class="empty" wx:if="{{!detailLoading && detailUnsigned.length===0}}">暂无未签到</view>
+    </view>
+  </block>
+</scroll-view>

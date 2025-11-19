@@ -1,0 +1,50 @@
+<scroll-view class="page-scroll p-24" scroll-y="true">
+  <block wx:if="{{role !== 'teacher'}}">
+    <view class="hero">
+      <view class="hero-title">学习追踪</view>
+      <view class="hero-subtitle">学习安排与进度概览</view>
+      <view class="chips">
+        <view class="chip">今日课程：{{todayCount}} 节</view>
+        <view class="chip">本周课程：{{weekCount}} 节</view>
+      </view>
+    </view>
+
+    <view class="section-title">今日课表</view>
+    <view class="card mb-24">
+      <view class="card-actions">
+        <button class="btn-secondary" size="mini" bindtap="loadToday">刷新</button>
+      </view>
+      <view wx:if="{{loading}}" class="skeleton mt-16"></view>
+      <view wx:if="{{!loading && today.length === 0}}" class="empty">今日暂无课程</view>
+      <block wx:for="{{today}}" wx:key="index">
+        <view class="list-item">
+          <image class="list-icon" src="../../assets/tab-schedule.png" />
+          <view class="list-text">
+            <view class="fs-32">{{item.className}}</view>
+            <view class="list-meta">{{item.date}} {{item.startTime}}-{{item.endTime}} | {{item.room || ''}}</view>
+          </view>
+        </view>
+      </block>
+    </view>
+    <view class="section-title">本周课表</view>
+    <view class="card">
+      <view class="card-actions">
+        <button class="btn-secondary" size="mini" bindtap="loadWeek">刷新</button>
+      </view>
+      <view wx:if="{{loadingWeek}}" class="skeleton mt-16"></view>
+      <view wx:if="{{!loadingWeek && week.length === 0}}" class="empty">本周暂无课程</view>
+      <block wx:for="{{week}}" wx:key="index">
+        <view class="list-item">
+          <image class="list-icon" src="../../assets/tab-schedule.png" />
+          <view class="list-text">
+            <view class="fs-28">{{item.className}}</view>
+            <view class="list-meta">{{item.date}} {{item.startTime}}-{{item.endTime}} | {{item.room || ''}}</view>
+          </view>
+        </view>
+      </block>
+    </view>
+  </block>
+  <block wx:else>
+    <view class="empty">请选择上方子菜单进入功能</view>
+  </block>
+</scroll-view>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eduadmin.wechat.mapper.LessonsMapper">
+  <resultMap id="RemainingMap" type="com.eduadmin.wechat.domain.RemainingLessonsItem">
+    <result property="courseId" column="course_id" />
+    <result property="courseName" column="course_name" />
+    <result property="purchased" column="purchased" />
+    <result property="attended" column="attended" />
+    <result property="remaining" column="remaining" />
+  </resultMap>
+
+  <!-- 计算每门课的购买课时与实际到课次数（按 studentId） -->
+  <select id="remainingByStudent" parameterType="long" resultMap="RemainingMap">
+    SELECT p.course_id,
+           p.course_name,
+           p.purchased,
+           COALESCE(a.attended, 0) AS attended,
+           GREATEST(p.purchased - COALESCE(a.attended, 0), 0) AS remaining
+    FROM (
+      SELECT cl.course_id AS course_id,
+             COALESCE(ci.name, CONCAT('班级#', cl.id)) AS course_name,
+             CAST(SUM(fs.hours) AS SIGNED) AS purchased
+      FROM finance_settlement fs
+      LEFT JOIN classes cl ON cl.id = fs.class_id
+      LEFT JOIN class_info ci ON ci.id = cl.id
+      WHERE fs.student_id = #{studentId}
+        AND fs.status = 'paid'
+      GROUP BY cl.course_id, ci.name, cl.id
+    ) p
+    LEFT JOIN (
+      SELECT s.course_id AS course_id,
+             COUNT(ar.id) AS attended
+      FROM attendance_record ar
+      INNER JOIN schedule_info s ON s.id = ar.schedule_id
+      WHERE ar.student_id = #{studentId}
+        AND ar.sign_type IN (1,2,3)
+      GROUP BY s.course_id
+    ) a ON a.course_id = p.course_id
+    ORDER BY p.course_id
+  </select>
+</mapper>

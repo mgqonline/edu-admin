@@ -1,0 +1,40 @@
+<scroll-view class="page-scroll p-24" scroll-y="true">
+  <view class="hero">
+    <view class="hero-title">意见反馈</view>
+    <view class="hero-subtitle">提交建议与查看历史</view>
+    <view class="chips">
+      <view class="chip">标题：{{titleLen}} 字</view>
+      <view class="chip">内容：{{contentLen}} 字</view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="section-title">反馈信息</view>
+    <view class="weui-cells weui-cells_form">
+      <view class="weui-cell">
+        <view class="weui-cell__hd"><label class="weui-label form-label">反馈标题</label></view>
+        <view class="weui-cell__bd"><input class="weui-input" placeholder="例如 教室噪音较大" bindinput="onTitle"/></view>
+      </view>
+      <view class="weui-cell">
+        <view class="weui-cell__hd"><label class="weui-label form-label">反馈内容</label></view>
+        <view class="weui-cell__bd"><textarea class="weui-textarea" placeholder="填写详细内容" bindinput="onContent">{{content}}</textarea></view>
+      </view>
+    </view>
+    <view class="card-actions"><button class="weui-btn weui-btn_primary" bindtap="onSubmit" loading="{{submitting}}">提交反馈</button></view>
+  </view>
+
+  <view class="section-title">我的反馈</view>
+  <view class="card">
+    <view wx:if="{{loading}}" class="skeleton mt-16"></view>
+    <block wx:for="{{list}}" wx:key="id">
+      <view class="list-item">
+        <view class="list-text">
+          <view class="fs-28">{{item.title}}</view>
+          <view class="list-meta">{{item.createdAt || ''}}</view>
+          <view>{{item.content}}</view>
+        </view>
+      </view>
+    </block>
+    <view class="empty" wx:if="{{!loading && list.length===0}}">暂无反馈</view>
+  </view>
+</scroll-view>

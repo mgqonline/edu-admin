@@ -1,0 +1,30 @@
+<scroll-view class="page-scroll p-24" scroll-y="true">
+  <view class="hero">
+    <view class="hero-title">课堂记录</view>
+    <view class="hero-subtitle">填写教学内容与学员表现</view>
+    <view class="chips">
+      <view class="chip">内容：{{contentLen}} 字</view>
+      <view class="chip">表现：{{performanceLen}} 字</view>
+      <view class="chip gray">课堂氛围：{{mood}}</view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="section-title">教学内容</view>
+    <view class="weui-cells weui-cells_form">
+      <view class="weui-cell"><view class="weui-cell__bd"><textarea class="weui-textarea" placeholder="请输入教学内容" bindinput="onContent">{{content}}</textarea></view></view>
+    </view>
+    <view class="section-title">学员表现记录</view>
+    <view class="weui-cells weui-cells_form">
+      <view class="weui-cell"><view class="weui-cell__bd"><textarea class="weui-textarea" placeholder="记录学员表现" bindinput="onPerformance">{{performance}}</textarea></view></view>
+    </view>
+    <view class="section-title">课堂氛围</view>
+    <view class="chips">
+      <view class="chip" data-v="良好" catchtap="setMood">良好</view>
+      <view class="chip" data-v="积极" catchtap="setMood">积极</view>
+      <view class="chip" data-v="一般" catchtap="setMood">一般</view>
+      <view class="chip" data-v="需改进" catchtap="setMood">需改进</view>
+    </view>
+    <view class="card-actions"><button class="weui-btn weui-btn_primary" bindtap="onSubmit" loading="{{submitting}}">提交记录</button></view>
+  </view>
+</scroll-view>

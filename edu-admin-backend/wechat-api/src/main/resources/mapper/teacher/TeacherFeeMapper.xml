@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eduadmin.wechat.mapper.TeacherFeeMapper">
+  <resultMap id="TeacherFeeRecordMap" type="com.eduadmin.wechat.domain.TeacherFeeRecord">
+    <id property="id" column="id"/>
+    <result property="teacherId" column="teacher_id"/>
+    <result property="course" column="course"/>
+    <result property="amount" column="amount"/>
+    <result property="date" column="date"/>
+  </resultMap>
+
+  <insert id="insert" parameterType="com.eduadmin.wechat.domain.TeacherFeeRecord" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO teacher_fee_record (teacher_id, course, amount, date)
+    VALUES (#{teacherId}, #{course}, #{amount}, #{date})
+  </insert>
+
+  <select id="sumByMonth" parameterType="map" resultType="java.math.BigDecimal">
+    SELECT COALESCE(SUM(amount), 0)
+    FROM teacher_fee_record
+    WHERE teacher_id = #{teacherId}
+      AND DATE_FORMAT(date, '%Y-%m') = #{month}
+  </select>
+
+  <select id="listByTeacher" parameterType="long" resultMap="TeacherFeeRecordMap">
+    SELECT id, teacher_id, course, amount, date
+    FROM teacher_fee_record
+    WHERE teacher_id = #{teacherId}
+    ORDER BY date DESC, id DESC
+  </select>
+</mapper>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eduadmin.wechat.mapper.AdjustRequestMapper">
+  <resultMap id="AdjustRequestMap" type="com.eduadmin.wechat.domain.AdjustRequest">
+    <id property="id" column="id"/>
+    <result property="teacherId" column="teacher_id"/>
+    <result property="course" column="course"/>
+    <result property="originalTime" column="original_time"/>
+    <result property="newTime" column="new_time"/>
+    <result property="reason" column="reason"/>
+    <result property="status" column="status"/>
+    <result property="submittedAt" column="submitted_at"/>
+  </resultMap>
+
+  <insert id="insert" parameterType="com.eduadmin.wechat.domain.AdjustRequest" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO teacher_adjust_request (teacher_id, course, original_time, new_time, reason, status, submitted_at)
+    VALUES (#{teacherId}, #{course}, #{originalTime}, #{newTime}, #{reason}, #{status}, NOW())
+  </insert>
+
+  <select id="listByTeacher" parameterType="long" resultMap="AdjustRequestMap">
+    SELECT id, teacher_id, course, original_time, new_time, reason, status, submitted_at
+    FROM teacher_adjust_request
+    WHERE teacher_id = #{teacherId}
+    ORDER BY id DESC
+  </select>
+</mapper>

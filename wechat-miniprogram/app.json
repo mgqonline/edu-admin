@@ -1,0 +1,48 @@
+{
+  "pages": [
+    "pages/login/index",
+    "pages/tab/profile/index",
+    "pages/tab/schedule/index",
+    "pages/tab/manage/index",
+    "pages/tab/service/index",
+    "pages/tab/interaction/index",
+    "pages/student/schedule/index",
+    "pages/student/study/index",
+    "pages/student/service/index",
+    "pages/student/index",
+    "pages/student/messages/index",
+    "pages/student/contact/index",
+    "pages/student/feedback/index",
+    "pages/student/sign/index",
+    "pages/teacher/index",
+    "pages/teacher/schedule/index",
+    "pages/teacher/attendance/index",
+    "pages/teacher/record/index",
+    "pages/teacher/homework/index",
+    "pages/teacher/grades/index",
+    "pages/teacher/profile/index",
+    "pages/teacher/adjust/index",
+    "pages/teacher/room/index",
+    "pages/teacher/plan/index",
+    "pages/teacher/notice/index",
+    "pages/teacher/message/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "教务小程序",
+    "navigationBarBackgroundColor": "#ffffff",
+    "backgroundTextStyle": "light"
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#666",
+    "selectedColor": "#07c160",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {"pagePath": "pages/tab/profile/index", "text": "主页", "iconPath": "assets/tab-profile.png", "selectedIconPath": "assets/tab-profile-selected.png"},
+      {"pagePath": "pages/tab/schedule/index", "text": "课表", "iconPath": "assets/tab-schedule.png", "selectedIconPath": "assets/tab-schedule-selected.png"},
+      {"pagePath": "pages/tab/manage/index", "text": "管理", "iconPath": "assets/tab-study.png", "selectedIconPath": "assets/tab-study-selected.png"},
+      {"pagePath": "pages/tab/service/index", "text": "服务", "iconPath": "assets/tab-service.png", "selectedIconPath": "assets/tab-service-selected.png"},
+      {"pagePath": "pages/tab/interaction/index", "text": "互动", "iconPath": "assets/tab-study.png", "selectedIconPath": "assets/tab-study-selected.png"}
+    ]
+  }
+}

@@ -1,0 +1,62 @@
+<scroll-view class="page-scroll p-24" scroll-y="true">
+  <view class="hero">
+    <view class="hero-title">调课申请</view>
+    <view class="hero-subtitle">提交调课申请与查看审批进度</view>
+    <view class="chips"><view class="chip">待审批：{{count}} 条</view></view>
+  </view>
+
+  <view class="card">
+    <view class="section-title">申请信息</view>
+    <view class="weui-cells weui-cells_form">
+      <view class="weui-cell"><view class="weui-cell__hd"><label class="weui-label">课程名称</label></view><view class="weui-cell__bd"><input class="weui-input" placeholder="如 高一数学" bindinput="onCourse" value="{{course}}"/></view></view>
+    </view>
+
+    <view class="form-row">
+      <view class="form-item">
+        <view class="form-label">原上课日期</view>
+        <picker mode="date" value="{{originalDate}}" bindchange="onPickOriginalDate">
+          <view class="picker-display">{{originalDate || '请选择日期'}}</view>
+        </picker>
+      </view>
+      <view class="form-item">
+        <view class="form-label">原上课时间</view>
+        <picker mode="time" value="{{originalTime}}" bindchange="onPickOriginalTime">
+          <view class="picker-display">{{originalTime || '请选择时间'}}</view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="form-row">
+      <view class="form-item">
+        <view class="form-label">申请新日期</view>
+        <picker mode="date" value="{{newDate}}" bindchange="onPickNewDate">
+          <view class="picker-display">{{newDate || '请选择日期'}}</view>
+        </picker>
+      </view>
+      <view class="form-item">
+        <view class="form-label">申请新时间</view>
+        <picker mode="time" value="{{newTime}}" bindchange="onPickNewTime">
+          <view class="picker-display">{{newTime || '请选择时间'}}</view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="section-title">调课原因</view>
+    <view class="weui-cells weui-cells_form"><view class="weui-cell"><view class="weui-cell__bd"><textarea class="weui-textarea" placeholder="说明调课原因" bindinput="onReason">{{reason}}</textarea></view></view></view>
+    <view class="card-actions"><button class="weui-btn weui-btn_primary" bindtap="onSubmit" loading="{{submitting}}">提交申请</button></view>
+  </view>
+
+  <view class="section-title">审批进度</view>
+  <view class="card">
+    <block wx:for="{{approvals}}" wx:key="id">
+      <view class="list-item">
+        <view class="list-text">
+          <view class="fs-28">{{item.course}}</view>
+          <view class="list-meta">新时间：{{item.newTime}} | 原时间：{{item.originalTime}}</view>
+        </view>
+        <view class="status-pill {{item.status === '审批通过' ? 'status-ok' : 'status-pending'}}">{{item.status}}</view>
+      </view>
+    </block>
+    <view class="empty" wx:if="{{approvals.length===0}}">暂无申请</view>
+  </view>
+</scroll-view>

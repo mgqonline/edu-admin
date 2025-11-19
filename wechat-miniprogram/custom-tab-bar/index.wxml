@@ -1,0 +1,16 @@
+<view class="tabbar">
+  <block wx:for="{{list}}" wx:key="pagePath">
+    <view class="tab-item {{selected == index ? 'active' : ''}}" data-path="{{item.pagePath}}" catchtap="switchTab">
+      <image class="tab-icon" src="{{selected == index ? item.selectedIconPath : item.iconPath}}" />
+      <text class="tab-text">{{item.text}}</text>
+    </view>
+  </block>
+</view>
+
+<view wx:if="{{submenuVisible}}" class="submenu-wrap">
+  <view class="submenu" catchtap="noop">
+    <block wx:for="{{submenuItems}}" wx:key="idx">
+      <view class="submenu-item" data-idx="{{index}}" catchtap="onSubmenuTap">{{item}}</view>
+    </block>
+  </view>
+</view>

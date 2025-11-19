@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eduadmin.wechat.mapper.TeacherClassNoticeMapper">
+  <resultMap id="BaseMap" type="com.eduadmin.wechat.domain.TeacherClassNotice">
+    <id column="id" property="id" />
+    <result column="teacher_id" property="teacherId" />
+    <result column="class_id" property="classId" />
+    <result column="title" property="title" />
+    <result column="content" property="content" />
+    <result column="status" property="status" />
+    <result column="created_at" property="createdAt" />
+  </resultMap>
+
+  <insert id="insert" parameterType="com.eduadmin.wechat.domain.TeacherClassNotice" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO teacher_class_notice(teacher_id, class_id, title, content, status)
+    VALUES(#{teacherId}, #{classId}, #{title}, #{content}, #{status})
+  </insert>
+
+  <select id="listByTeacher" resultMap="BaseMap">
+    SELECT * FROM teacher_class_notice WHERE teacher_id = #{teacherId} ORDER BY created_at DESC
+  </select>
+</mapper>

@@ -1,0 +1,16 @@
+<scroll-view class="page-scroll p-24" scroll-y="true">
+  <view class="hero">
+    <view class="hero-title">课程签到</view>
+    <view class="hero-subtitle">请输入或扫码签到码</view>
+  </view>
+  <view class="card">
+    <view class="weui-cells weui-cells_form">
+      <view class="weui-cell">
+        <view class="weui-cell__hd"><label class="weui-label form-label">签到码</label></view>
+        <view class="weui-cell__bd"><input class="weui-input" placeholder="如 ABC123" bindinput="onInput"/></view>
+        <view class="weui-cell__ft"><button class="weui-btn weui-btn_default" size="mini" bindtap="onScan">扫码</button></view>
+      </view>
+    </view>
+    <view class="card-actions"><button class="weui-btn weui-btn_primary" bindtap="onSubmit" loading="{{submitting}}">提交签到</button></view>
+  </view>
+</scroll-view>

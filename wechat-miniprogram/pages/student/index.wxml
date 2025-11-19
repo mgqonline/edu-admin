@@ -1,0 +1,42 @@
+<scroll-view class="page-scroll p-24" scroll-y="true">
+  <view class="hero">
+    <view class="hero-title">学情报告</view>
+    <view class="hero-subtitle">学习任务与快捷入口</view>
+    <view class="chips">
+      <view class="chip">今日待签到：{{scheduleCount}} 节</view>
+    </view>
+  </view>
+
+  <view class="section-title">待签到课时</view>
+  <view class="card mb-24">
+    <block wx:for="{{schedule}}" wx:key="index">
+      <view class="list-item">
+        <image class="list-icon" src="../../assets/tab-schedule.png" />
+        <view class="list-text">
+          <view class="fs-32">{{item.className}}</view>
+          <view class="list-meta">{{item.date}} {{item.startTime}}-{{item.endTime}}</view>
+        </view>
+        <view>
+          <button class="btn-primary" size="mini" bindtap="onScan">扫码签到</button>
+        </view>
+      </view>
+    </block>
+    <view class="empty" wx:if="{{schedule.length===0}}">暂无待签到课时</view>
+  </view>
+
+  <view class="section-title">快捷入口</view>
+  <view class="nav-grid">
+    <navigator url="/pages/student/messages/index" class="nav-item msg">
+      <view class="nav-deco"></view>
+      <view class="nav-item-title">消息中心</view>
+    </navigator>
+    <navigator url="/pages/student/contact/index" class="nav-item contact">
+      <view class="nav-deco"></view>
+      <view class="nav-item-title">联系老师</view>
+    </navigator>
+    <navigator url="/pages/student/feedback/index" class="nav-item feedback">
+      <view class="nav-deco"></view>
+      <view class="nav-item-title">意见反馈</view>
+    </navigator>
+  </view>
+</scroll-view>

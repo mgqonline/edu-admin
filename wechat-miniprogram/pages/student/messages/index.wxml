@@ -1,0 +1,35 @@
+<scroll-view class="page-scroll p-24" scroll-y="true">
+  <view class="hero">
+    <view class="hero-title">消息中心</view>
+    <view class="hero-subtitle">与老师互动的消息记录</view>
+    <view class="chips">
+      <view class="chip">未回复：{{unreadCount}} 条</view>
+      <view class="chip dark" data-v="all" catchtap="setFilter">全部</view>
+      <view class="chip gray" data-v="unread" catchtap="setFilter">仅未回复</view>
+    </view>
+  </view>
+
+  <view class="section-title">我的消息</view>
+  <view class="card">
+    <block wx:for="{{visibleList}}" wx:key="id">
+      <view class="list-item">
+        <view class="list-text">
+          <view class="fs-28">{{item.content}}</view>
+          <view class="list-meta">
+            <text class="badge-dot {{item.type == 'notice' ? 'green' : (item.reply ? 'green' : 'orange')}}"></text>
+            <text>{{item.createdAt || ''}}</text>
+            <text style="margin-left:8rpx" class="status-pill {{item.type == 'notice' ? 'status-ok' : (item.reply ? 'status-ok' : 'status-pending')}}">{{item.type == 'notice' ? '老师通知' : (item.reply ? '已回复' : '待回复')}}
+            </text>
+          </view>
+        </view>
+      </view>
+    </block>
+    <view class="empty" wx:if="{{visibleList.length===0}}">暂无消息</view>
+  </view>
+
+  <view class="section-title">发送留言</view>
+  <view class="composer">
+    <input class="composer-input" placeholder="输入留言内容" bindinput="onCompose" value="{{composeContent}}"/>
+    <button class="weui-btn weui-btn_primary" size="mini" bindtap="sendMessage" loading="{{sending}}">发送</button>
+  </view>
+</scroll-view>

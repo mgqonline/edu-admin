@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eduadmin.wechat.mapper.ScheduleMapper">
+  <resultMap id="ScheduleItemMap" type="com.eduadmin.wechat.domain.ScheduleItem">
+    <id property="id" column="id" />
+    <result property="date" column="date" />
+    <result property="className" column="class_name" />
+    <result property="startTime" column="start_time" />
+    <result property="endTime" column="end_time" />
+    <result property="classId" column="class_id" />
+    <result property="courseId" column="course_id" />
+  </resultMap>
+
+  <!-- 今天的课：一对一(studentId填充) + 班课(通过class_enrollment) -->
+  <select id="listTodayByStudent" parameterType="long" resultMap="ScheduleItemMap">
+    SELECT s.id AS id,
+           DATE_FORMAT(s.date_only, '%Y-%m-%d') AS date,
+           COALESCE(ci.name, CONCAT('班级#', s.class_id)) AS class_name,
+           s.start_time_text AS start_time,
+           s.end_time_text AS end_time,
+           s.class_id AS class_id,
+           s.course_id AS course_id
+    FROM schedule_info s
+    LEFT JOIN classes c ON c.id = s.class_id
+    LEFT JOIN class_info ci ON ci.id = c.id
+    WHERE s.date_only = CURDATE()
+      AND (
+        s.student_id = #{studentId}
+        OR s.class_id IN (
+          SELECT ce.class_id FROM class_enrollment ce
+          WHERE ce.student_id = #{studentId} AND ce.status = 'active'
+        )
+      )
+    ORDER BY s.start_time_text ASC
+  </select>
+
+  <!-- 指定日期范围的课表 -->
+  <select id="listByStudentBetween" resultMap="ScheduleItemMap">
+    SELECT s.id AS id,
+           DATE_FORMAT(s.date_only, '%Y-%m-%d') AS date,
+           COALESCE(ci.name, CONCAT('班级#', s.class_id)) AS class_name,
+           s.start_time_text AS start_time,
+           s.end_time_text AS end_time,
+           s.class_id AS class_id,
+           s.course_id AS course_id
+    FROM schedule_info s
+    LEFT JOIN classes c ON c.id = s.class_id
+    LEFT JOIN class_info ci ON ci.id = c.id
+    WHERE s.date_only BETWEEN #{startDate} AND #{endDate}
+      AND (
+        s.student_id = #{studentId}
+        OR s.class_id IN (
+          SELECT ce.classId FROM class_enrollment ce
+          WHERE ce.studentId = #{studentId} AND ce.status = 'active'
+        )
+      )
+    ORDER BY s.date_only ASC, s.start_time_text ASC
+  </select>
+</mapper>

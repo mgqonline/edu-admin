@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eduadmin.wechat.mapper.SignSessionMapper">
+  <resultMap id="SignSessionMap" type="com.eduadmin.wechat.domain.SignSession">
+    <id property="id" column="id"/>
+    <result property="teacherId" column="teacher_id"/>
+    <result property="classId" column="class_id"/>
+    <result property="code" column="code"/>
+    <result property="expireMinutes" column="expire_minutes"/>
+    <result property="createdAt" column="created_at"/>
+  </resultMap>
+
+  <insert id="insert" parameterType="com.eduadmin.wechat.domain.SignSession" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO teacher_sign_session (teacher_id, class_id, code, expire_minutes, created_at)
+    VALUES (#{teacherId}, #{classId}, #{code}, #{expireMinutes}, NOW())
+  </insert>
+</mapper>

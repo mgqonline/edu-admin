@@ -1,0 +1,38 @@
+<view class="page-padding">
+  <view class="card">
+    <view class="weui-cells">
+      <view class="weui-cell"><view class="weui-cell__bd">作业查看与提交</view></view>
+    </view>
+    <block wx:for="{{homework}}" wx:key="id">
+      <view class="weui-cells">
+        <view class="weui-cell">
+          <view class="weui-cell__bd">
+            <view>{{item.title}}</view>
+            <view style="color:#888">截止：{{item.dueDate}}</view>
+          </view>
+          <view class="weui-cell__ft">
+            <button class="weui-btn weui-btn_primary" bindtap="uploadPhoto" data-id="{{item.id}}">上传照片</button>
+          </view>
+        </view>
+      </view>
+    </block>
+    <view class="weui-loadmore" wx:if="{{homework.length===0}}">暂无作业</view>
+  </view>
+
+  <view class="card">
+    <view class="weui-cells">
+      <view class="weui-cell"><view class="weui-cell__bd">成绩查询</view></view>
+    </view>
+    <block wx:for="{{grades}}" wx:key="id">
+      <view class="weui-cells">
+        <view class="weui-cell">
+          <view class="weui-cell__bd">
+            <view>{{item.course}}</view>
+            <view style="color:#888">{{item.type}} 成绩：{{item.score}}</view>
+          </view>
+        </view>
+      </view>
+    </block>
+    <view class="weui-loadmore" wx:if="{{grades.length===0}}">暂无成绩</view>
+  </view>
+</view>

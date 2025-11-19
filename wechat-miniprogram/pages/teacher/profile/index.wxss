@@ -1,0 +1,9 @@
+/* pages/teacher/profile/index.wxss */
+.profile-header { display: flex; align-items: center; }
+.avatar { width: 96rpx; height: 96rpx; border-radius: 48rpx; margin-right: 16rpx; }
+.info { flex: 1; }
+.profile-stats { display: flex; justify-content: space-between; margin-top: 16rpx; }
+.stat-item { flex:1; text-align:center; padding: 12rpx 0; border: 1rpx solid #eaeaea; border-radius: 8rpx; margin-right: 12rpx; }
+.stat-item:last-child { margin-right: 0; }
+.stat-value { font-size: 32rpx; color: #333; }
+.stat-label { font-size: 24rpx; color: #666; }

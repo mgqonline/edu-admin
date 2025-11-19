@@ -1,0 +1,56 @@
+<view class="page-padding">
+  <view class="card">
+    <view class="weui-cells">
+      <view class="weui-cell"><view class="weui-cell__bd">请假申请</view></view>
+    </view>
+    <view class="weui-form__control-area">
+      <input class="weui-input" placeholder="请假原因" bindinput="onReason"/>
+      <input class="weui-input" placeholder="开始时间，如 2025-11-15 18:00" bindinput="onStart"/>
+      <input class="weui-input" placeholder="结束时间，如 2025-11-15 20:00" bindinput="onEnd"/>
+      <button class="weui-btn weui-btn_primary" bindtap="submitLeave">提交请假</button>
+    </view>
+    <block wx:for="{{leaves}}" wx:key="id">
+      <view class="weui-cells">
+        <view class="weui-cell">
+          <view class="weui-cell__bd">
+            <view>{{item.reason}}</view>
+            <view style="color:#888">{{item.start}} ~ {{item.end}}</view>
+          </view>
+          <view class="weui-cell__ft">{{item.status}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <view class="card">
+    <view class="weui-cells">
+      <view class="weui-cell"><view class="weui-cell__bd">剩余课时</view></view>
+    </view>
+    <block wx:for="{{lessons}}" wx:key="courseId">
+      <view class="weui-cells">
+        <view class="weui-cell">
+          <view class="weui-cell__bd">
+            <view>{{item.courseName}}</view>
+            <view style="color:#888">剩余：{{item.remaining}} 课时</view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <view class="card">
+    <view class="weui-cells">
+      <view class="weui-cell"><view class="weui-cell__bd">缴费记录</view></view>
+    </view>
+    <block wx:for="{{payments}}" wx:key="id">
+      <view class="weui-cells">
+        <view class="weui-cell">
+          <view class="weui-cell__bd">
+            <view>{{item.courseName}} - {{item.amount}} 元</view>
+            <view style="color:#888">{{item.date}} {{item.type}}</view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>

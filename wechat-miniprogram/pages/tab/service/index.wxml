@@ -1,0 +1,118 @@
+<scroll-view class="page-scroll p-24" scroll-y="true">
+  <block wx:if="{{role === 'teacher'}}">
+    <view class="hero">
+      <view class="hero-title">教学安排</view>
+      <view class="hero-subtitle">今日授课与课表概览</view>
+      <view class="chips">
+        <view class="chip">今日课程：{{scheduleCount}} 节</view>
+      </view>
+    </view>
+    <view class="card mb-24">
+      <view class="card-title">我的课表</view>
+      <view class="card-actions">
+        <button class="btn-secondary" size="mini" bindtap="loadSchedule">刷新</button>
+      </view>
+      <view wx:if="{{loading}}" class="skeleton mt-16"></view>
+      <view wx:if="{{!loading && list.length === 0}}" class="empty">暂无安排</view>
+      <block wx:for="{{list}}" wx:key="id">
+        <view class="list-item">
+          <image class="list-icon" src="../../assets/tab-schedule.png" />
+          <view class="list-text">
+            <view class="fs-32">{{item.className}}</view>
+            <view class="list-meta">{{item.date}} {{item.startTime}}-{{item.endTime}}</view>
+          </view>
+        </view>
+      </block>
+    </view>
+  </block>
+  <block wx:else>
+    <view class="hero">
+      <view class="hero-title">家校服务</view>
+      <view class="hero-subtitle">课时与请假概览</view>
+      <view class="chips">
+        <view class="chip">剩余课时：{{remainingTotal}} 节</view>
+        <view class="chip">我的请假：{{leaveCount}} 条</view>
+      </view>
+    </view>
+
+    <view class="section-title">请假申请</view>
+    <view class="card mb-24">
+      <view class="weui-cells weui-cells_form">
+        <view class="weui-cell">
+          <view class="weui-cell__hd"><label class="weui-label">请假原因</label></view>
+          <view class="weui-cell__bd"><input class="weui-input" placeholder="例如 生病/外出办事" bindinput="onReason"/></view>
+        </view>
+      </view>
+      <view class="form-row">
+        <view class="form-item">
+          <view class="form-label">开始日期</view>
+          <picker mode="date" value="{{startDate}}" bindchange="onStartDate">
+            <view class="picker-display">{{startDate || '请选择开始日期'}}</view>
+          </picker>
+        </view>
+        <view class="form-item">
+          <view class="form-label">开始时间</view>
+          <picker mode="time" value="{{startTime}}" bindchange="onStartTime">
+            <view class="picker-display">{{startTime || '请选择开始时间'}}</view>
+          </picker>
+        </view>
+      </view>
+      <view class="form-row">
+        <view class="form-item">
+          <view class="form-label">结束日期</view>
+          <picker mode="date" value="{{endDate}}" bindchange="onEndDate">
+            <view class="picker-display">{{endDate || '请选择结束日期'}}</view>
+          </picker>
+        </view>
+        <view class="form-item">
+          <view class="form-label">结束时间</view>
+          <picker mode="time" value="{{endTime}}" bindchange="onEndTime">
+            <view class="picker-display">{{endTime || '请选择结束时间'}}</view>
+          </picker>
+        </view>
+      </view>
+      <view class="card-actions">
+        <button class="weui-btn weui-btn_primary" bindtap="submitLeave" loading="{{submitting}}">提交请假</button>
+      </view>
+      <block wx:for="{{leaves}}" wx:key="id">
+        <view class="weui-cells">
+          <view class="weui-cell">
+            <view class="weui-cell__bd">
+              <view>{{item.reason}}</view>
+              <view class="list-meta">{{item.start}} ~ {{item.end}}</view>
+            </view>
+            <view class="weui-cell__ft">{{item.status}}</view>
+          </view>
+        </view>
+      </block>
+    </view>
+
+    <view class="section-title">剩余课时</view>
+    <view class="card mb-24">
+      <block wx:for="{{lessons}}" wx:key="courseId">
+        <view class="weui-cells">
+          <view class="weui-cell">
+            <view class="weui-cell__bd">
+              <view>{{item.courseName}}</view>
+              <view class="list-meta">剩余：{{item.remaining}} 课时</view>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+
+    <view class="section-title">缴费记录</view>
+    <view class="card">
+      <block wx:for="{{payments}}" wx:key="id">
+        <view class="weui-cells">
+          <view class="weui-cell">
+            <view class="weui-cell__bd">
+              <view>{{item.courseName}} - {{item.amount}} 元</view>
+              <view class="list-meta">{{item.date}} {{item.type}}</view>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+  </block>
+</scroll-view>

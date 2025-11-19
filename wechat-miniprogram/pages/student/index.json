@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "学员端",
+  "usingComponents": {
+    "side-menu": "/components/side-menu/index"
+  }
+}

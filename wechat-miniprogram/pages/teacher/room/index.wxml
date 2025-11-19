@@ -1,0 +1,44 @@
+<scroll-view class="page-scroll p-24" scroll-y="true">
+  <view class="hero">
+    <view class="hero-title">教室申请</view>
+    <view class="hero-subtitle">填写申请信息并提交</view>
+    <view class="chips"><view class="chip">预计人数：{{capacity || 0}}</view></view>
+  </view>
+
+  <view class="card">
+    <view class="section-title">申请时间</view>
+    <view class="form-row">
+      <view class="form-item">
+        <view class="form-label">日期</view>
+        <picker mode="date" value="{{dateOnly}}" bindchange="onPickDate">
+          <view class="picker-display">{{dateOnly || '请选择日期'}}</view>
+        </picker>
+      </view>
+      <view class="form-item">
+        <view class="form-label">开始时间</view>
+        <picker mode="time" value="{{startTime}}" bindchange="onPickStart">
+          <view class="picker-display">{{startTime || '请选择开始时间'}}</view>
+        </picker>
+      </view>
+    </view>
+    <view class="form-row">
+      <view class="form-item">
+        <view class="form-label">结束时间</view>
+        <picker mode="time" value="{{endTime}}" bindchange="onPickEnd">
+          <view class="picker-display">{{endTime || '请选择结束时间'}}</view>
+        </picker>
+      </view>
+      <view class="form-item">
+        <view class="form-label">容纳人数</view>
+        <input class="weui-input" placeholder="例如 30" bindinput="onCapacity" value="{{capacity}}"/>
+      </view>
+    </view>
+    <view class="section-title">申请原因</view>
+    <view class="weui-cells weui-cells_form">
+      <view class="weui-cell"><view class="weui-cell__bd"><textarea class="weui-textarea" placeholder="填写原因" bindinput="onReason">{{reason}}</textarea></view></view>
+    </view>
+    <view class="card-actions">
+      <button class="weui-btn weui-btn_primary" bindtap="onSubmit" loading="{{submitting}}">提交申请</button>
+    </view>
+  </view>
+</scroll-view>

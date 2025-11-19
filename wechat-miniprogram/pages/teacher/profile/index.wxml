@@ -1,0 +1,53 @@
+<view class="p-24">
+  <view class="card mb-24">
+    <view class="profile-header">
+      <image class="avatar" src="../../assets/tab-profile-selected.png"/>
+      <view class="info">
+        <view class="fs-32">{{profile.name}}</view>
+        <view class="list-meta">教师ID：{{profile.id}} · 任教科目：{{profile.subjects}}</view>
+        <view class="list-meta">教龄：{{profile.years}}年 · 联系方式：{{profile.phone}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="card mb-24">
+    <view class="card-title">本月课时费</view>
+    <view class="profile-stats">
+      <view class="stat-item">
+        <view class="stat-value">{{summary.monthTotal || 0}} 元</view>
+        <view class="stat-label">合计</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-value">{{summary.month}}</view>
+        <view class="stat-label">月份</view>
+      </view>
+    </view>
+    <view class="card-actions">
+      <button class="btn-secondary" size="mini" bindtap="toFeeHistory">查看明细</button>
+    </view>
+  </view>
+
+  <view class="card mb-24">
+    <view class="card-title">快捷入口</view>
+    <view class="grid-2 mt-16">
+      <button class="btn-primary" bindtap="goSchedule">我的课表</button>
+      <button class="btn-primary" bindtap="goGrades">成绩管理</button>
+      <button class="btn-primary" bindtap="goHomework">作业管理</button>
+      <button class="btn-primary" bindtap="goAttendance">签到管理</button>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">历史明细</view>
+    <view wx:if="{{history.length === 0}}" class="empty">暂无数据</view>
+    <block wx:for="{{history}}" wx:key="id">
+      <view class="list-item">
+        <view class="list-text">
+          <view class="fs-28">{{item.course}}</view>
+          <view class="list-meta">{{item.date}}</view>
+        </view>
+        <view class="fs-28 text-primary">{{item.amount}} 元</view>
+      </view>
+    </block>
+  </view>
+</view>

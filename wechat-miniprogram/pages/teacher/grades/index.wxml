@@ -1,0 +1,26 @@
+<scroll-view class="page-scroll p-24" scroll-y="true">
+  <view class="hero">
+    <view class="hero-title">成绩登记</view>
+    <view class="hero-subtitle">登记测试成绩并统计今日次数</view>
+    <view class="chips"><view class="chip">今日登记：{{submittedCount}} 次</view></view>
+  </view>
+  <view class="card">
+    <form bindsubmit="onSubmit" report-submit="true">
+      <view class="weui-cells weui-cells_form">
+        <view class="weui-cell">
+          <view class="weui-cell__bd"><input name="studentId" class="weui-input" placeholder="学员ID" /></view>
+        </view>
+        <view class="weui-cell">
+          <view class="weui-cell__bd"><input name="course" class="weui-input" placeholder="课程名称" /></view>
+        </view>
+        <view class="weui-cell">
+          <view class="weui-cell__bd"><input name="type" class="weui-input" placeholder="测试类型" /></view>
+        </view>
+        <view class="weui-cell">
+          <view class="weui-cell__bd"><input name="score" class="weui-input" placeholder="分数" type="number" /></view>
+        </view>
+      </view>
+      <button class="weui-btn weui-btn_primary" formType="submit" loading="{{submitting}}">提交</button>
+    </form>
+  </view>
+</scroll-view>

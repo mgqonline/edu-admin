@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eduadmin.wechat.mapper.TeacherClassRecordMapper">
+  <resultMap id="TeacherClassRecordMap" type="com.eduadmin.wechat.domain.TeacherClassRecord">
+    <id column="id" property="id" />
+    <result column="teacher_id" property="teacherId" />
+    <result column="class_id" property="classId" />
+    <result column="content" property="content" />
+    <result column="performance" property="performance" />
+    <result column="created_at" property="createdAt" />
+  </resultMap>
+
+  <insert id="insert" parameterType="com.eduadmin.wechat.domain.TeacherClassRecord" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO teacher_class_record (teacher_id, class_id, content, performance)
+    VALUES (#{teacherId}, #{classId}, #{content}, #{performance})
+  </insert>
+</mapper>

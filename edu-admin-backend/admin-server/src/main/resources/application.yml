@@ -1,0 +1,17 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: edu-admin-server
+  datasource:
+    url: jdbc:mysql://localhost:3306/edu_admin?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: mgq@2024
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+mybatis:
+  mapper-locations: classpath*:mapper/**/*.xml
+  type-aliases-package: com.eduadmin

@@ -1,0 +1,181 @@
+<scroll-view class="page-scroll p-24" scroll-y="true">
+  <block wx:if="{{role === 'teacher'}}">
+  <view class="hero">
+    <view class="hero-title">教学互动</view>
+    <view class="hero-subtitle">发布通知与互动信息</view>
+    <view class="chips"><view class="chip">通知数：{{noticeCount}} 条</view></view>
+  </view>
+  <view class="chips" style="margin-bottom:12rpx">
+    <view class="chip {{activeTab=='consult'?'dark':''}}" data-v="consult" catchtap="setTab">消息与咨询</view>
+    <view class="chip {{activeTab=='notice'?'dark':''}}" data-v="notice" catchtap="setTab">班级通知</view>
+    <view class="chip {{activeTab=='survey'?'dark':''}}" data-v="survey" catchtap="setTab">互动问卷</view>
+    <view class="chip {{activeTab=='vote'?'dark':''}}" data-v="vote" catchtap="setTab">投票</view>
+    <view class="chip {{activeTab=='direct'?'dark':''}}" data-v="direct" catchtap="setTab">个别沟通</view>
+  </view>
+
+  <view class="card" wx:if="{{activeTab=='notice'}}">
+    <view class="card-title">发布通知</view>
+    <view class="weui-cells weui-cells_form">
+      <view class="weui-cell">
+        <view class="weui-cell__hd"><label class="weui-label form-label">班级</label></view>
+        <view class="weui-cell__bd">
+          <picker mode="selector" range="{{classes}}" range-key="name" value="{{classIndex}}" bindchange="onClassPick">
+            <view class="picker-display">{{classes[classIndex].name || '请选择班级'}} </view>
+          </picker>
+        </view>
+      </view>
+      <view class="weui-cell">
+        <view class="weui-cell__hd"><label class="weui-label form-label">标题</label></view>
+        <view class="weui-cell__bd"><input class="weui-input" placeholder="通知标题" bindinput="onTitle" value="{{title}}"/></view>
+      </view>
+      <view class="weui-cell">
+        <view class="weui-cell__hd"><label class="weui-label form-label">内容</label></view>
+        <view class="weui-cell__bd"><textarea class="weui-textarea" placeholder="通知内容" bindinput="onContent">{{content}}</textarea></view>
+      </view>
+    </view>
+    <button class="weui-btn weui-btn_primary" bindtap="onSubmit" loading="{{submitting}}">发布</button>
+  </view>
+  <block wx:if="{{activeTab=='notice'}}">
+    <view class="section-title">我的通知</view>
+    <view class="card">
+      <view class="weui-cells">
+        <block wx:for="{{list}}" wx:key="id">
+          <view class="weui-cell">
+            <view class="weui-cell__bd"><text>{{item.title}}</text></view>
+          </view>
+        </block>
+        <view class="empty" wx:if="{{list.length===0}}">暂无通知</view>
+      </view>
+    </view>
+  </block>
+
+  <view class="card" wx:if="{{activeTab=='consult'}}">
+    <view class="card-title">家长/学员留言与咨询</view>
+    <view class="chips" style="margin-bottom:12rpx">
+      <view class="chip">总数：{{parentMessages.length}} 条</view>
+      <view class="chip dark">未回复：{{unreadMsgCount}} 条</view>
+    </view>
+    <view class="chips" style="margin-bottom:12rpx">
+      <view class="chip" data-v="all" catchtap="setConsultFilter">全部</view>
+      <view class="chip" data-v="unread" catchtap="setConsultFilter">仅未回复</view>
+      <view class="chip" data-v="resolved" catchtap="setConsultFilter">已解决</view>
+    </view>
+    <view class="weui-cells">
+      <block wx:for="{{parentVisible}}" wx:key="id">
+        <view class="weui-cell">
+          <view class="weui-cell__bd">
+            <view class="fs-28">{{item.parentName || item.userName || '家长'}}：</view>
+            <view class="list-meta">{{item.createdAt || ''}} · 状态：{{item.status || '待处理'}}</view>
+            <view>{{item.content}}</view>
+            <image wx:if="{{item.imageUrl}}" src="{{item.imageUrl}}" mode="aspectFit" style="width:100%;margin-top:8rpx"/>
+          </view>
+        </view>
+        <view class="weui-cell weui-cells_form">
+          <view class="weui-cell__hd"><label class="weui-label form-label">回复</label></view>
+          <view class="weui-cell__bd"><input class="weui-input" data-id="{{item.id}}" bindinput="onReplyInput" placeholder="输入回复"/></view>
+          <view class="weui-cell__ft"><button class="weui-btn weui-btn_default" size="mini" data-id="{{item.id}}" bindtap="onReplyImage">图片</button></view>
+          <view class="weui-cell__ft" style="margin-left:8rpx"><button class="weui-btn weui-btn_primary" size="mini" data-id="{{item.id}}" bindtap="onReply">发送</button></view>
+        </view>
+        <view class="weui-cells">
+          <view class="weui-cell">
+            <view class="weui-cell__bd">
+              <button class="weui-btn weui-btn_default" size="mini" data-id="{{item.id}}" data-status="resolved" bindtap="markStatus">标记已解决</button>
+              <button class="weui-btn weui-btn_default" size="mini" data-id="{{item.id}}" data-status="followup" bindtap="markStatus" style="margin-left:8rpx">待跟进</button>
+              <button class="weui-btn weui-btn_default" size="mini" data-id="{{item.id}}" bindtap="convertToNotice" style="margin-left:8rpx">转为班级通知</button>
+            </view>
+          </view>
+        </view>
+      </block>
+      <view class="empty" wx:if="{{parentVisible.length===0}}">暂无留言与咨询</view>
+    </view>
+  </view>
+
+  <view class="card" wx:if="{{activeTab=='survey'}}">
+    <view class="card-title">互动问卷</view>
+    <view class="weui-cells weui-cells_form">
+      <view class="weui-cell"><view class="weui-cell__hd"><label class="weui-label form-label">问题</label></view><view class="weui-cell__bd"><input class="weui-input" placeholder="如 本周课程难度是否适中？" bindinput="onSurveyQuestion"/></view></view>
+      <view class="weui-cell"><view class="weui-cell__hd"><label class="weui-label form-label">选项</label></view><view class="weui-cell__bd"><input class="weui-input" placeholder="用逗号分隔，如 适中,偏难,偏易" bindinput="onSurveyOptions"/></view></view>
+    </view>
+    <view class="card-actions"><button class="weui-btn weui-btn_primary" bindtap="createSurvey">发布问卷</button></view>
+  </view>
+  <block wx:if="{{activeTab=='survey'}}">
+    <view class="section-title">已发布问卷</view>
+    <view class="card">
+      <view class="weui-cells">
+        <block wx:for="{{surveys}}" wx:key="id">
+          <view class="weui-cell">
+            <view class="weui-cell__bd"><text>{{item.question}}</text></view>
+          </view>
+        </block>
+        <view class="empty" wx:if="{{surveys.length===0}}">暂无问卷</view>
+      </view>
+    </view>
+  </block>
+
+  <view class="card" wx:if="{{activeTab=='vote'}}">
+    <view class="card-title">投票</view>
+    <view class="weui-cells weui-cells_form">
+      <view class="weui-cell"><view class="weui-cell__hd"><label class="weui-label form-label">主题</label></view><view class="weui-cell__bd"><input class="weui-input" placeholder="如 周末补课时间" bindinput="onVotingTopic"/></view></view>
+      <view class="weui-cell"><view class="weui-cell__hd"><label class="weui-label form-label">选项</label></view><view class="weui-cell__bd"><input class="weui-input" placeholder="用逗号分隔，如 周六上午,周日下午" bindinput="onVotingOptions"/></view></view>
+    </view>
+    <view class="card-actions"><button class="weui-btn weui-btn_primary" bindtap="createVote">发布投票</button></view>
+  </view>
+  <block wx:if="{{activeTab=='vote'}}">
+    <view class="section-title">已发布投票</view>
+    <view class="card">
+      <view class="weui-cells">
+        <block wx:for="{{votes}}" wx:key="id">
+          <view class="weui-cell">
+            <view class="weui-cell__bd"><text>{{item.topic}}</text></view>
+          </view>
+        </block>
+        <view class="empty" wx:if="{{votes.length===0}}">暂无投票</view>
+      </view>
+    </view>
+  </block>
+
+  <view class="card" wx:if="{{activeTab=='direct'}}">
+    <view class="card-title">个别沟通</view>
+    <view class="weui-cells weui-cells_form">
+      <view class="weui-cell"><view class="weui-cell__hd"><label class="weui-label form-label">学员ID</label></view><view class="weui-cell__bd"><input class="weui-input" placeholder="如 1001" bindinput="onDirectStudentId"/></view></view>
+      <view class="weui-cell"><view class="weui-cell__hd"><label class="weui-label form-label">内容</label></view><view class="weui-cell__bd"><textarea class="weui-textarea" placeholder="填写沟通内容" bindinput="onDirectContent"></textarea></view></view>
+    </view>
+    <view class="card-actions"><button class="weui-btn weui-btn_primary" bindtap="createDirect">发起沟通</button></view>
+  </view>
+  <block wx:if="{{activeTab=='direct'}}">
+    <view class="section-title">我的沟通</view>
+    <view class="card">
+      <view class="weui-cells">
+        <block wx:for="{{directs}}" wx:key="id">
+          <view class="weui-cell">
+            <view class="weui-cell__bd"><text>{{item.studentId}}：{{item.content}}</text></view>
+          </view>
+        </block>
+        <view class="empty" wx:if="{{directs.length===0}}">暂无沟通</view>
+      </view>
+    </view>
+  </block>
+  </block>
+  <block wx:else>
+    <view class="card">
+      <view class="card-title">消息中心</view>
+      <view class="weui-cells">
+        <block wx:for="{{studentList}}" wx:key="id">
+          <view class="weui-cell">
+            <view class="weui-cell__bd">
+              <text>老师回复：</text>
+              <text>{{item.reply || '待回复'}}</text>
+            </view>
+          </view>
+          <view class="weui-cell">
+            <view class="weui-cell__bd">
+              <text>我方留言：</text>
+              <text>{{item.content}}</text>
+            </view>
+          </view>
+        </block>
+        <view class="empty" wx:if="{{studentList.length===0}}">暂无消息</view>
+      </view>
+    </view>
+  </block>
+</scroll-view>

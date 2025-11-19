@@ -1,0 +1,7 @@
+.container { padding: 24rpx; }
+.section { margin-bottom: 32rpx; }
+.label { display: block; color: #333; margin-bottom: 12rpx; }
+.input { border: 1px solid #ddd; border-radius: 8rpx; padding: 16rpx; }
+.radio-group { display: flex; }
+.radio-item { margin-right: 32rpx; }
+.btn { margin-top: 24rpx; }

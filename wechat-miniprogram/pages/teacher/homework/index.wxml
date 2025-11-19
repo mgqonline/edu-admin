@@ -1,0 +1,27 @@
+<scroll-view class="page-scroll p-24" scroll-y="true">
+  <view class="hero">
+    <view class="hero-title">作业布置</view>
+    <view class="hero-subtitle">发布作业与上传参考答案</view>
+    <view class="chips">
+      <view class="chip">标题：{{titleLen}} 字</view>
+      <view class="chip">内容：{{contentLen}} 字</view>
+      <view class="chip gray">参考答案：{{answerName || '未上传'}} </view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="section-title">作业信息</view>
+    <view class="weui-cells weui-cells_form">
+      <view class="weui-cell"><view class="weui-cell__hd"><label class="weui-label">标题</label></view><view class="weui-cell__bd"><input class="weui-input" placeholder="作业标题" bindinput="onTitle" value="{{title}}"/></view></view>
+      <view class="weui-cell"><view class="weui-cell__hd"><label class="weui-label">内容</label></view><view class="weui-cell__bd"><textarea class="weui-textarea" placeholder="作业内容" bindinput="onContent">{{content}}</textarea></view></view>
+    </view>
+    <view class="section-title">参考答案</view>
+    <view class="composer">
+      <input class="composer-input" placeholder="已上传文件名" value="{{answerName}}" disabled/>
+      <button class="weui-btn weui-btn_default" size="mini" bindtap="onUpload">上传文件</button>
+    </view>
+    <view class="card-actions">
+      <button class="weui-btn weui-btn_primary" bindtap="onPublish" loading="{{submitting}}">发布</button>
+    </view>
+  </view>
+</scroll-view>

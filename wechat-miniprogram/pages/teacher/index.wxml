@@ -1,0 +1,87 @@
+<view class="weui-panel safe-area-bottom">
+  <button size="mini" bindtap="openMenu">≡</button>
+  <side-menu id="menu"></side-menu>
+  <view class="weui-panel__hd">教师端侧边栏菜单</view>
+  <view class="weui-panel__bd">
+    <!-- 个人中心 -->
+    <view class="weui-cells__title">个人中心</view>
+    <view class="weui-cells">
+      <navigator url="/pages/teacher/profile/index" class="weui-cell weui-cell_access">
+        <view class="weui-cell__hd"><image class="menu-icon" src="../../assets/tab-profile.png"/></view>
+        <view class="weui-cell__bd"><text>个人信息</text></view>
+        <view class="weui-cell__ft"></view>
+      </navigator>
+    </view>
+
+    <!-- 我的课表 -->
+    <view class="weui-cells__title">我的课表</view>
+    <view class="weui-cells">
+      <navigator url="/pages/teacher/schedule/index" class="weui-cell weui-cell_access">
+        <view class="weui-cell__hd"><image class="menu-icon" src="../../assets/tab-schedule.png"/></view>
+        <view class="weui-cell__bd"><text>课表查询（当日/当周/整学期）</text></view>
+        <view class="weui-cell__ft"></view>
+      </navigator>
+    </view>
+
+    <!-- 教学管理 -->
+    <view class="weui-cells__title">教学管理</view>
+    <view class="weui-cells">
+      <navigator url="/pages/teacher/grades/index" class="weui-cell weui-cell_access">
+        <view class="weui-cell__hd"><image class="menu-icon" src="../../assets/tab-study.png"/></view>
+        <view class="weui-cell__bd"><text>成绩管理</text></view>
+        <view class="weui-cell__ft"></view>
+      </navigator>
+      <navigator url="/pages/teacher/homework/index" class="weui-cell weui-cell_access">
+        <view class="weui-cell__hd"><image class="menu-icon" src="../../assets/tab-study.png"/></view>
+        <view class="weui-cell__bd"><text>作业管理</text></view>
+        <view class="weui-cell__ft"></view>
+      </navigator>
+      <navigator url="/pages/teacher/attendance/index" class="weui-cell weui-cell_access">
+        <view class="weui-cell__hd"><image class="menu-icon" src="../../assets/tab-study.png"/></view>
+        <view class="weui-cell__bd"><text>考勤管理</text></view>
+        <view class="weui-cell__ft"></view>
+      </navigator>
+      <navigator url="/pages/teacher/record/index" class="weui-cell weui-cell_access">
+        <view class="weui-cell__hd"><image class="menu-icon" src="../../assets/tab-study.png"/></view>
+        <view class="weui-cell__bd"><text>课堂记录</text></view>
+        <view class="weui-cell__ft"></view>
+      </navigator>
+    </view>
+
+    <!-- 教务事务 -->
+    <view class="weui-cells__title">教务事务</view>
+    <view class="weui-cells">
+      <navigator url="/pages/teacher/adjust/index" class="weui-cell weui-cell_access">
+        <view class="weui-cell__hd"><image class="menu-icon" src="../../assets/tab-service.png"/></view>
+        <view class="weui-cell__bd"><text>调课申请</text></view>
+        <view class="weui-cell__ft"></view>
+      </navigator>
+      <navigator url="/pages/teacher/room/index" class="weui-cell weui-cell_access">
+        <view class="weui-cell__hd"><image class="menu-icon" src="../../assets/tab-service.png"/></view>
+        <view class="weui-cell__bd"><text>教室申请</text></view>
+        <view class="weui-cell__ft"></view>
+      </navigator>
+      <navigator url="/pages/teacher/plan/index" class="weui-cell weui-cell_access">
+        <view class="weui-cell__hd"><image class="menu-icon" src="../../assets/tab-service.png"/></view>
+        <view class="weui-cell__bd"><text>教学计划</text></view>
+        <view class="weui-cell__ft"></view>
+      </navigator>
+    </view>
+
+    <!-- 家校互动 -->
+    <view class="weui-cells__title">家校互动</view>
+    <view class="weui-cells">
+      <navigator url="/pages/teacher/notice/index" class="weui-cell weui-cell_access">
+        <view class="weui-cell__hd"><image class="menu-icon" src="../../assets/tab-service.png"/></view>
+        <view class="weui-cell__bd"><text>班级通知</text></view>
+        <view class="weui-cell__ft"></view>
+      </navigator>
+      <navigator url="/pages/teacher/message/index" class="weui-cell weui-cell_access">
+        <view class="weui-cell__hd"><image class="menu-icon" src="../../assets/tab-study.png"/></view>
+        <view class="weui-cell__bd"><text>家长留言</text></view>
+        <view class="weui-cell__ft"></view>
+      </navigator>
+    </view>
+  </view>
+  <view class="weui-panel__ft"></view>
+</view>

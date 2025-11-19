@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eduadmin.wechat.mapper.TeacherProfileMapper">
+  <resultMap id="TeacherProfileMap" type="com.eduadmin.wechat.domain.TeacherProfile">
+    <id property="id" column="id"/>
+    <result property="teacherId" column="teacher_id"/>
+    <result property="name" column="name"/>
+    <result property="subjects" column="subjects"/>
+    <result property="years" column="years"/>
+    <result property="phone" column="phone"/>
+  </resultMap>
+
+  <select id="getByTeacherId" parameterType="long" resultMap="TeacherProfileMap">
+    SELECT id, teacher_id, name, subjects, years, phone
+    FROM teacher_profile
+    WHERE teacher_id = #{teacherId}
+    LIMIT 1
+  </select>
+
+  <insert id="upsert" parameterType="com.eduadmin.wechat.domain.TeacherProfile" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO teacher_profile(teacher_id, name, subjects, years, phone)
+    VALUES(#{teacherId}, #{name}, #{subjects}, #{years}, #{phone})
+    ON DUPLICATE KEY UPDATE
+      name = VALUES(name),
+      subjects = VALUES(subjects),
+      years = VALUES(years),
+      phone = VALUES(phone)
+  </insert>
+</mapper>

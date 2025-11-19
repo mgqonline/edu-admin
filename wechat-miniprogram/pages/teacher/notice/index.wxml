@@ -1,0 +1,42 @@
+<scroll-view class="page-scroll p-24" scroll-y="true">
+  <view class="hero">
+    <view class="hero-title">班级通知</view>
+    <view class="hero-subtitle">发布与查看通知</view>
+    <view class="chips"><view class="chip">总数：{{count}} 条</view></view>
+  </view>
+  <view class="card">
+    <view class="card-title">发布通知</view>
+    <view class="weui-cells weui-cells_form">
+      <view class="weui-cell">
+        <view class="weui-cell__hd"><label class="weui-label form-label">班级</label></view>
+        <view class="weui-cell__bd">
+          <picker mode="selector" range="{{classes}}" range-key="name" value="{{classIndex}}" bindchange="onClassPick">
+            <view class="picker-display">{{classes[classIndex].name || '请选择班级'}} </view>
+          </picker>
+        </view>
+      </view>
+      <view class="weui-cell">
+        <view class="weui-cell__hd"><label class="weui-label form-label">标题</label></view>
+        <view class="weui-cell__bd"><input class="weui-input" placeholder="通知标题" bindinput="onTitle"/></view>
+      </view>
+      <view class="weui-cell">
+        <view class="weui-cell__hd"><label class="weui-label form-label">内容</label></view>
+        <view class="weui-cell__bd"><textarea class="weui-textarea" placeholder="通知内容" bindinput="onContent"></textarea></view>
+      </view>
+    </view>
+    <button class="weui-btn weui-btn_primary" bindtap="onSubmit">发布</button>
+
+  </view>
+  <view class="section-title">我的通知</view>
+  <view class="card">
+    <block wx:for="{{list}}" wx:key="id">
+      <view class="list-item">
+        <view class="list-text">
+          <view class="fs-28">{{item.title}}</view>
+          <view class="list-meta">{{item.createdAt || ''}}</view>
+        </view>
+      </view>
+    </block>
+    <view class="empty" wx:if="{{list.length===0}}">暂无通知</view>
+  </view>
+</scroll-view>

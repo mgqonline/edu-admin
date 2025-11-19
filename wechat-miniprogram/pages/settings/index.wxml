@@ -1,0 +1,28 @@
+<view class="container">
+  <view class="section">
+    <text class="title">通知开关</text>
+    <view class="row">
+      <text>作业提醒</text>
+      <switch checked="{{settings.homework}}" bindchange="toggle" data-key="homework" />
+    </view>
+    <view class="row">
+      <text>考勤提醒</text>
+      <switch checked="{{settings.attendance}}" bindchange="toggle" data-key="attendance" />
+    </view>
+    <view class="row">
+      <text>缴费提醒</text>
+      <switch checked="{{settings.payment}}" bindchange="toggle" data-key="payment" />
+    </view>
+  </view>
+
+  <view class="section">
+    <text class="title">缓存清理</text>
+    <button bindtap="clearCache">清理缓存</button>
+  </view>
+
+  <view class="section">
+    <text class="title">关于我们</text>
+    <text>版本：v1.0.0</text>
+    <text>联系方式：support@example.com</text>
+  </view>
+</view>

@@ -1,0 +1,21 @@
+<scroll-view class="page-scroll p-24" scroll-y="true">
+  <view class="hero">
+    <view class="hero-title">今日授课</view>
+    <view class="hero-subtitle">教师课表与安排</view>
+    <view class="chips">
+      <view class="chip">课程数：{{count}} 节</view>
+    </view>
+  </view>
+  <view class="card">
+    <view wx:if="{{loading}}" class="skeleton mt-16"></view>
+    <view wx:if="{{!loading && list.length === 0}}" class="empty">暂无安排</view>
+    <block wx:for="{{list}}" wx:key="id">
+      <view class="list-item">
+        <view class="list-text">
+          <view class="fs-32">{{item.className}}</view>
+          <view class="list-meta">{{item.date}} {{item.startTime}}-{{item.endTime}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>

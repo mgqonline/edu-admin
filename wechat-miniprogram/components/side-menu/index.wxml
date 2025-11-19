@@ -1,0 +1,26 @@
+<view wx:if="{{visible}}" class="overlay" catchtouchmove="noop" bindtap="close"></view>
+<view class="drawer" wx:if="{{visible}}">
+  <view class="header">
+    <text>菜单</text>
+    <button size="mini" bindtap="close">关闭</button>
+  </view>
+  <view class="section">
+    <view class="title">角色</view>
+    <radio-group bindchange="onRoleChange" class="radio-group">
+      <label class="radio-item"><radio value="student" checked="{{role==='student'}}"/> 学员</label>
+      <label class="radio-item"><radio value="teacher" checked="{{role==='teacher'}}"/> 教师</label>
+    </radio-group>
+  </view>
+  <view class="section">
+    <view class="title">快捷入口</view>
+    <button class="menu-btn" data-url="/pages/tab/profile/index" bindtap="go">个人中心</button>
+    <button class="menu-btn" data-url="/pages/tab/schedule/index" bindtap="go">课表/学习</button>
+    <button class="menu-btn" data-url="/pages/tab/manage/index" bindtap="go">教学管理/学情报告</button>
+    <button class="menu-btn" data-url="/pages/tab/service/index" bindtap="go">教务事务/家校服务</button>
+    <button class="menu-btn" data-url="/pages/tab/interaction/index" bindtap="go">消息中心</button>
+    <button class="menu-btn" data-url="/pages/settings/index" bindtap="go">系统设置</button>
+  </view>
+  <view class="section">
+    <button class="logout" type="warn" bindtap="logout">退出登录</button>
+  </view>
+</view>
